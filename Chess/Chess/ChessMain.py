@@ -33,7 +33,7 @@ def main():
     screen = p.display.set_mode((WIDTH, HEIGHT))  # displaying a 8 x 8 window white screen
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
-    gs = ChessEngine.GameState()   # מופע של המחלקה chess engine
+    gs = ChessEngine.GameState()   # an object of the class ''ChessEngine''
     validMoves = gs.getValidMoves() # list of valid moves to check later on if the move is valid
     moveMade = False # flag variable for when a move is made
     animate = False # flag variable for when we should animate a move
