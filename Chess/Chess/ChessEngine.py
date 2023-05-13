@@ -29,7 +29,7 @@ class GameState():
         self.enpassantPossible = () # coordinates for the square where en passant capture is possible
 
     # takes a move as a parameter and excutes it ( this will not work for castling, and en-passant, pawn promotion)
-    def makeMove(self, move):   # move = מופע של Move ?  יש שימוש במשתנים שנמצאים בקלאס של התזוזה הגדולה
+    def makeMove(self, move):   # move = object of Move
         self.board[move.startRow][move.startCol] = "--"  # once a piece left his square, the square becomes empty hence "--"
         self.board[move.endRow][move.endCol] = move.pieceMoved  # the moved piece in his new position
         self.movelog.append(move) # log the move so we can undo it later or display the history of the logs
@@ -59,17 +59,9 @@ class GameState():
     """
     undo the last move made
     """
-    def undoMovee(self): # my way # not being used
-        if len(self.movelog) != 0: # make sure that there is a move to undo TODO: done it in my own way (video part 3, time 5:40) for the guider way
-            self.board[self.movelog[-1].startRow][self.movelog[-1].startCol] = self.movelog[-1].pieceMoved # '--'
-            self.board[self.movelog[-1].endRow][self.movelog[-1].endCol] = self.movelog[-1].pieceCaptured # 'wK'
-            self.movelog = self.movelog[:-1]  # removes the last registered movement from the list (so we can undoMoves multiple times instead of just once)
-            self.whiteToMove = not self.whiteToMove
 
 
-
-
-    def undoMove(self): # guide's way
+    def undoMove(self): 
         if len(self.movelog) != 0: # make sure that there is a move to undo
             move = self.movelog.pop()
             self.board[move.startRow][move.startCol] = move.pieceMoved
@@ -217,7 +209,7 @@ class GameState():
     get all the knight moves for the knight located at row, col and add these moves to the list
     """
     def getKnightMoves(self, r, c, moves):
-        enemyColor = "b" if self.whiteToMove else "w" # row is left right, coln is up down ?
+        enemyColor = "b" if self.whiteToMove else "w" # row is left right, coln is up down 
         direction = {"UP_LEFT" :(r-2, c-1), "UP_RIGHT" :(r-2, c+1), "LEFT_UP" :(r-1, c-2), "LEFT_DOWN" :(r+1, c-2), "RIGHT_UP" :(r-1, c+2),
                       "RIGHT_DOWN": (r+1, c+2), "DOWN_LEFT": (r+2, c-1), "DOWN_RIGHT": (r+2, c+1)}
         for key, value in direction.items():
